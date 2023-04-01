@@ -1,53 +1,46 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Image} from 'react-native';
 
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      numero1: '',
-      numero2: '',
-      resultado: ''
-    };
-    
-    this.calcular = this.calcular.bind(this);
-  }
+export default function App(){
+const [numero1, setNumero1] = useState('')
+const [numero2, setNumero2] = useState('')
+const [resultado, setResultado] = useState('')
 
 
-  calcular(){
-    if ( (this.state.numero1 === '') || (this.state.numero2 === '')){
+  function calcular(){
+    if ( (numero1 === '') || (numero2 === '')){
       alert('É obrigatório digitar os dois numeros')
       return;
     }
 
-    res = (this.state.numero1 / (this.state.numero2 * this.state.numero2)).toFixed(2)
+    res = (numero1 / (numero2 * numero2)).toFixed(2)
     
     if(res < 18.5){
-      this.setState({resultado: 'Abaixo do peso, seu Frango ' + res});
+      setResultado(('Abaixo do peso, seu Frango ' + res))
     }
     else if(res >= 18.5 && res <= 24.9 ){
-      this.setState({resultado: 'Peso normal ' + res});
+      setResultado(('Peso normal ' + res))
     }
     else if(res >= 25 && res <= 29.9 ){
-      this.setState({resultado: 'Sobrepeso ' + res});
+      setResultado(('Sobrepeso ' + res))
     }
     else if(res >= 30 && res <= 34.9 ){
-      this.setState({resultado: 'Obesidade Grau I ' + res});
+      setResultado(('Obesidade Grau I ' + res))
     }
     else if(res >= 35 && res <= 39.9 ){
-      this.setState({resultado: 'Obesidade Grau II ' + res});
+      setResultado(('Obesidade Grau II ' + res))
     }
     else if(res >= 40){
-      this.setState({resultado: 'Obesidade Grau III, mano vai fazer uma dieta ' + res});
+      setResultado(('Obesidade Grau III, mano vai fazer uma dieta ' + res))
     }
     else{
-      this.setState({resultado: 'Alguma coisa ta muito errada ' + res});
+      setResultado(('Alguma coisa ta muito errada ' + res))
     }
   }
 
 
-  render(){
+  
     return(
       <View style={styles.area}>
 
@@ -62,22 +55,22 @@ class App extends Component{
       <TextInput
       style={styles.input}
       placeholder="Digite o peso"
-      onChangeText={ (numero) => this.setState({numero1: numero}) }
+      onChangeText={ (numero) => setNumero1((numero)) }
       />
 
       <TextInput
       style={styles.input}
       placeholder="Digite a altura"
-      onChangeText={ (numero) => this.setState({numero2: numero}) }
+      onChangeText={ (numero) => setNumero2((numero)) }
       />
 
-      <Button title="Verificar" onPress={this.calcular} />
+      <Button title="Verificar" onPress={calcular} />
 
 
-      <Text style={styles.texto}> {this.state.resultado} </Text>
+      <Text style={styles.texto}> {resultado} </Text>
       </View>
     );
-  }
+  
 }
 
 
@@ -118,5 +111,3 @@ const styles = StyleSheet.create({
 
 })
 
-
-export default App;
